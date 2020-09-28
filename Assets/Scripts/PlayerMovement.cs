@@ -6,7 +6,9 @@ public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D myRb;
     float inputHori;
-    bool isJumping;
+    public bool isJumping;
+    bool facingLeft;
+    bool facingRight;
     public bool isGrounded; // set by GroundedTigger.cs
     public bool canDoubleJump;
     public float moveSpeed = 10f;
@@ -14,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        facingLeft = false;
+        facingRight = true;
         myRb = GetComponent<Rigidbody2D>();
     }
     
@@ -22,6 +26,18 @@ public class PlayerMovement : MonoBehaviour
         // movement horizontal with virtual input axis
         inputHori = Input.GetAxis("Horizontal"); // return val from -1 to 1
         
+        // change player direction (facing)
+        if (inputHori < 0 && !facingLeft) {
+            facingLeft = true;
+            facingRight = false;
+            transform.Rotate(0f, 180f, 0f);
+        }
+        if (inputHori > 0 && !facingRight) {
+            facingRight = true;
+            facingLeft = false;
+            transform.Rotate(0f, 180f, 0f);
+        }
+
         // jumping
         if (Input.GetButtonDown("Jump") && isGrounded){
             isJumping = true;
