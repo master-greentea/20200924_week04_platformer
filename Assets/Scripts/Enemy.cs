@@ -11,7 +11,5 @@ public class Enemy : MonoBehaviour
             Debug.Log("1x");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
         }
-        // enemy despawn if bullet enter trigger
-        
     }
 }

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ProjectileLaunch : MonoBehaviour
 {
-    public float rotationSpeed = 420f;
     public float shootForce = 880f;
     public Rigidbody2D Flame;
-    float minR = 1;
+    float myRotationZ;
+    float minR = -20;
     float maxR = 45;
     // aiming cannon and left click to shoot
     void Update()
@@ -16,14 +16,16 @@ public class ProjectileLaunch : MonoBehaviour
         // -1f is move mouse left, 1f move mouse right, 0f not moving mouse horizontally
         float vertiMouseSpeed = Input.GetAxis("Mouse Y");
 
-        // transform.Rotate(0, 0, horiMouseSpeed); // is framerate dependent
-        transform.Rotate(0, 0, vertiMouseSpeed * Time.deltaTime * rotationSpeed); // framerate independent
+        myRotationZ += vertiMouseSpeed;
+        myRotationZ = Mathf.Clamp(myRotationZ, minR, maxR);
+        transform.localRotation = Quaternion.Euler(0f, 0f, myRotationZ);
+        //transform.Rotate(0, 0, vertiMouseSpeed * Time.deltaTime * rotationSpeed); // framerate independent
         // dT usually a very small number between 0.0 - 1.0
 
         // lock rotation?
-        Vector3 currentRotation = transform.localRotation.eulerAngles;
-        currentRotation.z = Mathf.Clamp(currentRotation.z, minR, maxR);
-        transform.localRotation = Quaternion.Euler(currentRotation);
+        //Vector3 currentRotation = transform.localRotation.eulerAngles;
+        //currentRotation.z = Mathf.Clamp(currentRotation.z, minR, maxR);
+        //transform.localRotation = Quaternion.Euler(currentRotation);
 
         // click to shoot ball
         // instantiate ("clone") an object
