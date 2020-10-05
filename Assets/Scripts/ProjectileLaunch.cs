@@ -30,6 +30,7 @@ public class ProjectileLaunch : MonoBehaviour
             Rigidbody2D newClone = Instantiate(Flame, transform.position + transform.right, Quaternion.identity); //quaternion? 0, 0, 0, 0
             // adding force to "down"
             newClone.AddForce(transform.right * shootForce);
+            GetComponent<AudioSource>().Play();
         }
     }
 }
